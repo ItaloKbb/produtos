@@ -40,19 +40,14 @@ public class ProdutoController {
         return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ProdutoResponseDTO> buscarPorId(@RequestHeader("username") String username,
-                                                          @RequestHeader("password") String password,
-                                                          @PathVariable String id) {
-        validarToken(username, password);
-        return ResponseEntity.ok(service.buscarPorId(id));
+    @GetMapping({ "", "/" }) // Aceita ambos os caminhos
+    public ResponseEntity<List<ProdutoResponseDTO>> listarTodos() {
+        return ResponseEntity.ok(service.listarTodos());
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProdutoResponseDTO>> listarTodos(@RequestHeader("username") String username,
-                                                                @RequestHeader("password") String password) {
-        validarToken(username, password);
-        return ResponseEntity.ok(service.listarTodos());
+    @GetMapping("/{id}")
+    public ResponseEntity<ProdutoResponseDTO> buscarPorId(@PathVariable String id) {
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
     @DeleteMapping("/{id}")
